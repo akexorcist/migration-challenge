@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lmwn.copilot.challenge.migration.data.LocalDataRepository
 import com.lmwn.copilot.challenge.migration.data.DataRepository
+import com.lmwn.copilot.challenge.migration.data.LocalDataRepository
 import com.lmwn.copilot.challenge.migration.data.User
 import kotlinx.coroutines.launch
 
@@ -13,7 +13,7 @@ enum class DataType {
     USERS, PRODUCTS, NEWS, STATISTICS
 }
 
-class HomeViewModel(private val repository: DataRepository = LocalDataRepository()): ViewModel() {
+class HomeViewModel(private val repository: DataRepository = LocalDataRepository()) : ViewModel() {
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -40,77 +40,77 @@ class HomeViewModel(private val repository: DataRepository = LocalDataRepository
     }
 
     fun fetchUsers() {
-        _currentDataType.value = DataType.USERS
-        _isLoading.value = true
-        _errorMessage.value = null
+        _currentDataType.postValue(DataType.USERS)
+        _isLoading.postValue(true)
+        _errorMessage.postValue(null)
         viewModelScope.launch {
             try {
                 val users = repository.getUsers()
-                _users.value = users
-                _products.value = emptyList()
-                _news.value = emptyList()
-                _statistics.value = emptyList()
-                _isLoading.value = false
+                _users.postValue(users)
+                _products.postValue(emptyList())
+                _news.postValue(emptyList())
+                _statistics.postValue(emptyList())
+                _isLoading.postValue(false)
             } catch (e: Exception) {
-                _isLoading.value = false
-                _errorMessage.value = e.message ?: "Unknown error"
+                _isLoading.postValue(false)
+                _errorMessage.postValue(e.message ?: "Unknown error")
             }
         }
     }
 
     fun fetchProducts() {
-        _currentDataType.value = DataType.PRODUCTS
-        _isLoading.value = true
-        _errorMessage.value = null
+        _currentDataType.postValue(DataType.PRODUCTS)
+        _isLoading.postValue(true)
+        _errorMessage.postValue(null)
         viewModelScope.launch {
             try {
                 val products = repository.getProducts()
-                _products.value = products
-                _users.value = emptyList()
-                _news.value = emptyList()
-                _statistics.value = emptyList()
-                _isLoading.value = false
+                _products.postValue(products)
+                _users.postValue(emptyList())
+                _news.postValue(emptyList())
+                _statistics.postValue(emptyList())
+                _isLoading.postValue(false)
             } catch (e: Exception) {
-                _isLoading.value = false
-                _errorMessage.value = e.message ?: "Unknown error"
+                _isLoading.postValue(false)
+                _errorMessage.postValue(e.message ?: "Unknown error")
             }
         }
     }
 
     fun fetchNews() {
-        _currentDataType.value = DataType.NEWS
-        _isLoading.value = true
-        _errorMessage.value = null
+        _currentDataType.postValue(DataType.NEWS)
+        _isLoading.postValue(true)
+        _errorMessage.postValue(null)
         viewModelScope.launch {
             try {
                 val news = repository.getNews()
-                _news.value = news
-                _users.value = emptyList()
-                _products.value = emptyList()
-                _statistics.value = emptyList()
-                _isLoading.value = false
+                _news.postValue(news)
+                _users.postValue(emptyList())
+                _products.postValue(emptyList())
+                _statistics.postValue(emptyList())
+                _isLoading.postValue(false)
             } catch (e: Exception) {
-                _isLoading.value = false
-                _errorMessage.value = e.message ?: "Unknown error"
+                _isLoading.postValue(false)
+                _errorMessage.postValue(e.message ?: "Unknown error")
             }
         }
     }
 
     fun fetchStatistics() {
-        _currentDataType.value = DataType.STATISTICS
-        _isLoading.value = true
-        _errorMessage.value = null
+        _currentDataType.postValue(DataType.STATISTICS)
+        _isLoading.postValue(true)
+        _errorMessage.postValue(null)
         viewModelScope.launch {
             try {
                 val statistics = repository.getStatistics()
-                _statistics.value = statistics
-                _users.value = emptyList()
-                _products.value = emptyList()
-                _news.value = emptyList()
-                _isLoading.value = false
+                _statistics.postValue(statistics)
+                _users.postValue(emptyList())
+                _products.postValue(emptyList())
+                _news.postValue(emptyList())
+                _isLoading.postValue(false)
             } catch (e: Exception) {
-                _isLoading.value = false
-                _errorMessage.value = e.message ?: "Unknown error"
+                _isLoading.postValue(false)
+                _errorMessage.postValue(e.message ?: "Unknown error")
             }
         }
     }
