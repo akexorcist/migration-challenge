@@ -1,4 +1,4 @@
-package com.lmwn.copilot.challenge.migration.domain
+package com.lmwn.copilot.challenge.migration.data
 
 data class User(
     val id: Int,
@@ -6,4 +6,4 @@ data class User(
     val email: String,
     val department: String,
     val isActive: Boolean
-) 
+)

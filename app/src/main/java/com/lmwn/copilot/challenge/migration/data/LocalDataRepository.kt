@@ -1,11 +1,11 @@
-package com.lmwn.copilot.challenge.migration.domain
+package com.lmwn.copilot.challenge.migration.data
 
-import kotlinx.coroutines.delay
 import kotlin.random.Random
+import kotlinx.coroutines.delay
 
-class DataRepository {
-    
-    suspend fun getFakeUsers(): List<User> {
+class LocalDataRepository : DataRepository {
+
+    override suspend fun getUsers(): List<User> {
         delay(1500) // Simulate network delay
         return listOf(
             User(1, "👨‍💻 John Doe", "john.doe@company.com", "Engineering", true),
@@ -20,8 +20,8 @@ class DataRepository {
             User(10, "👩‍🎤 Amy Taylor", "amy.taylor@company.com", "Communications", true)
         )
     }
-    
-    suspend fun getFakeProducts(): List<String> {
+
+    override suspend fun getProducts(): List<String> {
         delay(1200) // Simulate network delay
         return listOf(
             "💻 MacBook Pro M3 - $2,499",
@@ -36,8 +36,8 @@ class DataRepository {
             "⌨️ Mechanical Keyboard - $159"
         )
     }
-    
-    suspend fun getFakeNews(): List<String> {
+
+    override suspend fun getNews(): List<String> {
         delay(1000) // Simulate network delay
         return listOf(
             "🚀 SpaceX Successfully Launches New Satellite Mission",
@@ -52,14 +52,14 @@ class DataRepository {
             "🔬 Scientists Discover New Species in Deep Ocean Exploration"
         )
     }
-    
-    suspend fun getFakeStatistics(): List<String> {
+
+    override suspend fun getStatistics(): List<String> {
         delay(800) // Simulate network delay
         val revenue = Random.nextInt(50000, 150000)
         val users = Random.nextInt(10000, 50000)
         val growth = Random.nextDouble(5.0, 25.0)
         val satisfaction = Random.nextDouble(85.0, 98.0)
-        
+
         return listOf(
             "💰 Monthly Revenue: ${String.format("$%,d", revenue)}",
             "👥 Active Users: ${String.format("%,d", users)}",
@@ -73,10 +73,4 @@ class DataRepository {
             "💬 Support Tickets: ${Random.nextInt(100, 500)} resolved"
         )
     }
-    
-    // Keep the original method for backward compatibility
-    suspend fun getFakeData(): List<String> {
-        delay(1000) // Simulate network/database delay
-        return listOf("Item 1", "Item 2", "Item 3", "Item 4", "Item 5")
-    }
-} 
+}

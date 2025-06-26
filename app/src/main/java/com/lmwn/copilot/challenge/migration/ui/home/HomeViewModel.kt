@@ -4,15 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lmwn.copilot.challenge.migration.domain.DataRepository
-import com.lmwn.copilot.challenge.migration.domain.User
+import com.lmwn.copilot.challenge.migration.data.LocalDataRepository
+import com.lmwn.copilot.challenge.migration.data.DataRepository
+import com.lmwn.copilot.challenge.migration.data.User
 import kotlinx.coroutines.launch
 
 enum class DataType {
-    USERS, PRODUCTS, NEWS, STATISTICS, ITEMS
+    USERS, PRODUCTS, NEWS, STATISTICS
 }
 
-class HomeViewModel(private val repository: DataRepository = DataRepository()): ViewModel() {
+class HomeViewModel(private val repository: DataRepository = LocalDataRepository()): ViewModel() {
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -44,7 +45,7 @@ class HomeViewModel(private val repository: DataRepository = DataRepository()): 
         _errorMessage.value = null
         viewModelScope.launch {
             try {
-                val users = repository.getFakeUsers()
+                val users = repository.getUsers()
                 _users.value = users
                 _products.value = emptyList()
                 _news.value = emptyList()
@@ -63,7 +64,7 @@ class HomeViewModel(private val repository: DataRepository = DataRepository()): 
         _errorMessage.value = null
         viewModelScope.launch {
             try {
-                val products = repository.getFakeProducts()
+                val products = repository.getProducts()
                 _products.value = products
                 _users.value = emptyList()
                 _news.value = emptyList()
@@ -82,7 +83,7 @@ class HomeViewModel(private val repository: DataRepository = DataRepository()): 
         _errorMessage.value = null
         viewModelScope.launch {
             try {
-                val news = repository.getFakeNews()
+                val news = repository.getNews()
                 _news.value = news
                 _users.value = emptyList()
                 _products.value = emptyList()
@@ -101,7 +102,7 @@ class HomeViewModel(private val repository: DataRepository = DataRepository()): 
         _errorMessage.value = null
         viewModelScope.launch {
             try {
-                val statistics = repository.getFakeStatistics()
+                val statistics = repository.getStatistics()
                 _statistics.value = statistics
                 _users.value = emptyList()
                 _products.value = emptyList()
@@ -113,23 +114,4 @@ class HomeViewModel(private val repository: DataRepository = DataRepository()): 
             }
         }
     }
-
-    fun fetchData() {
-        _currentDataType.value = DataType.ITEMS
-        _isLoading.value = true
-        _errorMessage.value = null
-        viewModelScope.launch {
-            try {
-                val data = repository.getFakeData()
-                _products.value = data
-                _users.value = emptyList()
-                _news.value = emptyList()
-                _statistics.value = emptyList()
-                _isLoading.value = false
-            } catch (e: Exception) {
-                _isLoading.value = false
-                _errorMessage.value = e.message ?: "Unknown error"
-            }
-        }
-    }
-} 
+}

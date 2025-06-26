@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.livedata.observeAsState
-import com.lmwn.copilot.challenge.migration.domain.User
+import com.lmwn.copilot.challenge.migration.data.User
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
@@ -118,7 +118,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
                                 DataType.PRODUCTS -> viewModel.fetchProducts()
                                 DataType.NEWS -> viewModel.fetchNews()
                                 DataType.STATISTICS -> viewModel.fetchStatistics()
-                                else -> viewModel.fetchData()
+                                else -> {}
                             }
                         }) {
                             Text("🔄 Retry")
